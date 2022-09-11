@@ -1,5 +1,7 @@
 package com.velox.server.controllers;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +13,7 @@ import com.velox.server.models.ERole;
 import com.velox.server.security.jwt.JwtUtils;
 import com.velox.server.security.services.RefreshTokenService;
 import com.velox.server.security.services.UserDetailsImpl;
+import com.velox.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,10 +49,12 @@ public class AuthController {
   AuthenticationManager authenticationManager;
 
   @Autowired
-  UserRepository userRepository;
+  UserService userService;
 
   @Autowired
   RoleRepository roleRepository;
+
+
 
   @Autowired
   PasswordEncoder encoder;
@@ -83,11 +88,11 @@ public class AuthController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+    if (userService.existsByUsername(signUpRequest.getUsername())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
     }
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+    if (userService.existsByEmail(signUpRequest.getEmail())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
     }
 
@@ -126,7 +131,8 @@ public class AuthController {
     }
 
     user.setRoles(roles);
-    userRepository.save(user);
+    user.setCreatedAt(new Timestamp(new Date().getTime()));
+    userService.save(user);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
