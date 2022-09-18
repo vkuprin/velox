@@ -46,6 +46,9 @@ public class User {
 	private String lastName;
 
 	private Date dob;
+
+	@Column(columnDefinition = "boolean default false")
+	private boolean emailVerified;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
@@ -148,5 +151,13 @@ public class User {
 
 	public void setDob(Date dob) {
 		this.dob = dob;
+	}
+
+	public boolean getEmailVerified() {
+		return emailVerified;
+	}
+
+	public void setEmailVerified(boolean emailVerified) {
+		this.emailVerified = emailVerified;
 	}
 }

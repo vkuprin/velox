@@ -14,5 +14,7 @@ public interface UserService {
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
     User findByUsername(String username);
-
+    User findByEmail(String email);
+    void verifyEmail(String email);
+    void changePassword(String email, String password);
 }

@@ -10,36 +10,32 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import com.velox.server.models.ERole;
+import com.velox.server.payload.request.*;
+import com.velox.server.security.SecureCommands;
 import com.velox.server.security.jwt.JwtUtils;
-import com.velox.server.security.services.RefreshTokenService;
-import com.velox.server.security.services.UserDetailsImpl;
+import com.velox.server.service.RefreshTokenService;
+import com.velox.server.service.UserDetailsImpl;
 import com.velox.server.service.UserService;
+import com.velox.server.service.events.EmailEvents;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import com.velox.server.exception.TokenRefreshException;
 import com.velox.server.models.RefreshToken;
 import com.velox.server.models.Role;
 import com.velox.server.models.User;
-import com.velox.server.payload.request.LogOutRequest;
-import com.velox.server.payload.request.LoginRequest;
-import com.velox.server.payload.request.SignupRequest;
-import com.velox.server.payload.request.TokenRefreshRequest;
 import com.velox.server.payload.response.JwtResponse;
 import com.velox.server.payload.response.MessageResponse;
 import com.velox.server.payload.response.TokenRefreshResponse;
 import com.velox.server.repository.RoleRepository;
-import com.velox.server.repository.UserRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -54,22 +50,26 @@ public class AuthController {
   @Autowired
   RoleRepository roleRepository;
 
-
+  @Autowired
+  private ApplicationEventPublisher publisher;
 
   @Autowired
-  PasswordEncoder encoder;
+  private PasswordEncoder encoder;
 
   @Autowired
-  JwtUtils jwtUtils;
+  private JwtUtils jwtUtils;
 
   @Autowired
-  RefreshTokenService refreshTokenService;
+  private SecureCommands secureCommands;
+
+  @Autowired
+  private RefreshTokenService refreshTokenService;
 
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     Authentication authentication = authenticationManager
-        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -133,7 +133,8 @@ public class AuthController {
     user.setRoles(roles);
     user.setCreatedAt(new Timestamp(new Date().getTime()));
     userService.save(user);
-
+    String command = secureCommands.generateTokenFromCommand("verify " + user.getEmail());
+    publisher.publishEvent(new EmailEvents("send_verify" , user.getEmail(), command));
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
@@ -145,7 +146,7 @@ public class AuthController {
         .map(refreshTokenService::verifyExpiration)
         .map(RefreshToken::getUser)
         .map(user -> {
-          String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+          String token = jwtUtils.generateTokenFromEmail(user.getEmail());
           return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
         })
         .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
@@ -157,5 +158,47 @@ public class AuthController {
     refreshTokenService.deleteByUserId(logOutRequest.getUserId());
     return ResponseEntity.ok(new MessageResponse("Log out successful!"));
   }
+
+  @GetMapping("/email/verify")
+  public ResponseEntity verifyEmail(@RequestParam(name = "token") String token) {
+    try {
+      String command = secureCommands.getCommandFromJwtToken(token);
+      if (StringUtils.isEmpty(command) || !command.startsWith("verify ")) {
+        return ResponseEntity.badRequest().build();
+      }
+      String email = command.split(" ")[1];
+      userService.verifyEmail(email);
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @GetMapping("/email/restore_pass")
+  public ResponseEntity sendRestoreLink(@RequestParam(name = "email") String email) {
+    if (!userService.existsByEmail(email)) {
+      return ResponseEntity.badRequest().body(new MessageResponse("Error: Email does not exist"));
+    }
+    String command = secureCommands.generateTokenFromCommand("restore_pass " + email);
+    publisher.publishEvent(new EmailEvents("send_restore_pass" , email, command));
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping("/restore_pass")
+  public ResponseEntity restorePassword(@Valid @RequestBody RestorePassword restorePassword) {
+    try {
+      String command = secureCommands.getCommandFromJwtToken(restorePassword.getToken());
+      if (StringUtils.isEmpty(command) || !command.startsWith("restore_pass ")) {
+        return ResponseEntity.badRequest().build();
+      }
+      String email = command.split(" ")[1];
+      userService.changePassword(email, encoder.encode(restorePassword.getPassword()));
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().build();
+    }
+
+  }
+
 
 }

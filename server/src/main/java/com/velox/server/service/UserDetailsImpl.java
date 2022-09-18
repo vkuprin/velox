@@ -1,4 +1,4 @@
-package com.velox.server.security.services;
+package com.velox.server.service;
 
 import java.util.Collection;
 import java.util.List;

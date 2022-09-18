@@ -2,7 +2,7 @@ package com.velox.server.security;
 
 import com.velox.server.security.jwt.AuthEntryPointJwt;
 import com.velox.server.security.jwt.AuthTokenFilter;
-import com.velox.server.security.services.UserDetailsServiceImpl;
+import com.velox.server.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,7 +63,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/webjars/**").permitAll()
 				.antMatchers("/configuration/**").permitAll()
 				.antMatchers("/v2/api-docs/**").permitAll()
-
 			.anyRequest().authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
