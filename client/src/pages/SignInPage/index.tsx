@@ -15,16 +15,12 @@ import styles from './index.module.scss';
 const { Title } = Typography;
 const { Content } = Layout;
 
-interface SignInPageProps {
-  title?: string;
-}
-
 interface LoginProps {
   username: string;
   password: string;
 }
 
-const SignIn = ({ title = 'Venox' }: SignInPageProps) => {
+const SignIn = () => {
   const navigate = useNavigate();
 
   const onFinish = ({ password, username }: LoginProps) => {
@@ -42,7 +38,7 @@ const SignIn = ({ title = 'Venox' }: SignInPageProps) => {
       <Content className="signin">
         <Row gutter={[24, 0]} justify="space-around">
           <Col>
-            <Title className="mb-15">{title}</Title>
+            <Title className="mb-15">Velox</Title>
             <Form
               onFinish={onFinish}
               onFinishFailed={onFinishFailed}
