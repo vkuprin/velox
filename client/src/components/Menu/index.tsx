@@ -112,13 +112,10 @@ const Sidenav = ({ color }: SidenavProps) => {
 
   return (
     <>
-      <div className="brand">
-        <span>Support Menu</span>
-      </div>
       <hr />
       <Menu theme="light" mode="inline">
         <Menu.Item className="menu-item-header" key="0">
-          Tables
+          Data
         </Menu.Item>
         <Menu.Item key="1">
           <NavLink to="/dashboard">
@@ -130,7 +127,7 @@ const Sidenav = ({ color }: SidenavProps) => {
             >
               {dashboard}
             </span>
-            <span className="label">Product types</span>
+            <span className="label">Payments</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="2">
@@ -143,7 +140,7 @@ const Sidenav = ({ color }: SidenavProps) => {
             >
               {tables}
             </span>
-            <span className="label">Providers</span>
+            <span className="label">Orders</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
@@ -160,10 +157,10 @@ const Sidenav = ({ color }: SidenavProps) => {
           </NavLink>
         </Menu.Item>
         <Menu.Item className="menu-item-header" key="4">
-          Account Pages
+          Account
         </Menu.Item>
         <Menu.Item key="5">
-          <NavLink to="/sign-in">
+          <NavLink to="/">
             <span className="icon">{signin}</span>
             <span className="label">Sign In</span>
           </NavLink>
@@ -171,7 +168,7 @@ const Sidenav = ({ color }: SidenavProps) => {
         <Menu.Item key="6">
           <NavLink to="/sign-up">
             <span className="icon">{signup}</span>
-            <span className="label">Sign Up</span>
+            <span className="label">My Profile</span>
           </NavLink>
         </Menu.Item>
       </Menu>

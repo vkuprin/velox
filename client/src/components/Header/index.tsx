@@ -110,19 +110,19 @@ const Header = ({
   // @ts-ignore
   return (
     <>
-      <Button className="setting-drwer" onClick={showDrawer}>
-        {setting}
-      </Button>
+      {/* <Button className="setting-drwer" onClick={showDrawer}> */}
+      {/*  {setting} */}
+      {/* </Button> */}
       <Row gutter={[24, 0]}>
         <Col span={24} md={6}>
-          <Breadcrumb>
-            <Breadcrumb.Item>
-              <NavLink to="/">Pages</NavLink>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>
-              {name.replace('/', '')}
-            </Breadcrumb.Item>
-          </Breadcrumb>
+          {/* <Breadcrumb> */}
+          {/*  <Breadcrumb.Item> */}
+          {/*    <NavLink to="/">Pages</NavLink> */}
+          {/*  </Breadcrumb.Item> */}
+          {/*  <Breadcrumb.Item> */}
+          {/*    {name.replace('/', '')} */}
+          {/*  </Breadcrumb.Item> */}
+          {/* </Breadcrumb> */}
           <div className="ant-page-header-heading">
             <span
               className="ant-page-header-heading-title"
@@ -191,11 +191,11 @@ const Header = ({
             {profile}
             <span>Sign in</span>
           </Link>
-          <Input
-            className="header-search"
-            placeholder="Type here..."
-            prefix={<SearchOutlined />}
-          />
+          {/* <Input */}
+          {/*  className="header-search" */}
+          {/*  placeholder="Type here..." */}
+          {/*  prefix={<SearchOutlined />} */}
+          {/* /> */}
         </Col>
       </Row>
     </>

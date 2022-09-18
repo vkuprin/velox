@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+
+  sample:
+    container_name: venox-client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - 5173:3000
+    environment:
+      - VENOX_PROD=true
