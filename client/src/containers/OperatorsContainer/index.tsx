@@ -19,7 +19,10 @@ const OperatorsContainer = ({
   handleDelete,
   editable,
 }: OperatorsContainerProps) => (editable ? (
-  <span>
+  <span style={{
+    marginRight: '20%',
+  }}
+  >
     <Typography.Link
       onClick={() => save(record.id)}
       style={{

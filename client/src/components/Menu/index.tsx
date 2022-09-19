@@ -1,5 +1,6 @@
 import { Menu } from 'antd';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthProvider';
 
 interface SidenavProps {
   color: string;
@@ -7,6 +8,7 @@ interface SidenavProps {
 
 const Sidenav = ({ color }: SidenavProps) => {
   const { pathname } = useLocation();
+  const auth = useAuth();
   const page = pathname.replace('/', '');
 
   const dashboard = [
@@ -144,7 +146,7 @@ const Sidenav = ({ color }: SidenavProps) => {
           </NavLink>
         </Menu.Item>
         <Menu.Item key="3">
-          <NavLink to="/profile">
+          <NavLink to="/home">
             <span
               className="icon"
               style={{
@@ -160,15 +162,15 @@ const Sidenav = ({ color }: SidenavProps) => {
           Account
         </Menu.Item>
         <Menu.Item key="5">
-          <NavLink to="/">
-            <span className="icon">{signin}</span>
-            <span className="label">Sign In</span>
+          <NavLink to="/profile">
+            <span className="icon">{signup}</span>
+            <span className="label">My Profile</span>
           </NavLink>
         </Menu.Item>
         <Menu.Item key="6">
-          <NavLink to="/sign-up">
-            <span className="icon">{signup}</span>
-            <span className="label">My Profile</span>
+          <NavLink to="/" onClick={() => localStorage.clear()}>
+            <span className="icon">{signin}</span>
+            <span className="label">Log Out</span>
           </NavLink>
         </Menu.Item>
       </Menu>

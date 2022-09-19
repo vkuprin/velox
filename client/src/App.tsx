@@ -8,6 +8,8 @@ import './styles/main.scss';
 import './styles/responsive.scss';
 import './styles/form.scss';
 import HomePage from './pages/HomePage';
+import { UserProvider } from './context/UserProvider';
+import ProfilePage from './pages/ProfilePage';
 
 interface ProtectedMainLayoutProps {
     children: ReactNode;
@@ -25,6 +27,8 @@ const App = () => {
   const Components: Record<string, () => JSX.Element> = {
     home: HomePage,
     login: SignInPage,
+    profile: ProfilePage,
+    '/profile/:ID': ProfilePage,
   };
 
   const SpecificRoute = (routeName: string) => {
@@ -35,9 +39,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/" element={<SignInPage />} />
-          {
+        <UserProvider>
+          <Routes>
+            <Route path="/" element={<SignInPage />} />
+            {
             Object.keys(Components).map((route) => (
               <Route
                 path={`/${route}`}
@@ -50,7 +55,8 @@ const App = () => {
               />
             ))
         }
-        </Routes>
+          </Routes>
+        </UserProvider>
       </AuthProvider>
     </BrowserRouter>
   );

@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Layout,
   Button,
@@ -9,32 +8,65 @@ import {
   Input,
 } from 'antd';
 import cs from 'classnames';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
+import { useAuth } from '../../context/AuthProvider';
 import styles from './index.module.scss';
+import AuthService from '../../services/AuthService';
+import { useUser } from '../../context/UserProvider';
+import useNotification from '../../hooks/useNotification';
+import isHttpError from '../../utils/api/statusCode';
 
 const { Title } = Typography;
 const { Content } = Layout;
 
 interface LoginProps {
-  username: string;
+  email: string;
   password: string;
+  domain: string;
 }
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const location: any = useLocation();
+  const auth = useAuth();
+  const { setUserData } = useUser();
 
-  const onFinish = ({ password, username }: LoginProps) => {
-    if (username === 'venox' && password === '12345678') {
-      navigate('/home');
-    }
+  const from = location.state?.from?.pathname || '/home';
+
+  const onFinish = ({ password, email }: LoginProps) => {
+    AuthService.postSignIn({ email, password })
+      .then((r) => {
+        if (!isHttpError(r.status)) {
+          setUserData(r.user);
+          auth.signIn(email, () => navigate(from));
+          localStorage.setItem('login', String(true));
+          localStorage.setItem('tokens', JSON.stringify(r));
+        } else {
+          useNotification({
+            placement: 'topRight',
+            message: 'Error',
+            description: r.message,
+          });
+        }
+      }).catch((e) => {
+      // eslint-disable-next-line no-console
+        console.error(e);
+      });
   };
 
   const onFinishFailed = (errorInfo: Error | any) => {
-    console.error('Failed:', errorInfo);
+    useNotification(
+      {
+        placement: 'topRight',
+        message: 'Error',
+        description: 'Please check your email and password',
+      },
+    );
   };
 
   return (
-    <Layout className={cs('layout-default', 'layout-signin', styles.zoom)}>
+    <Layout className={cs('layout-default', 'layout-signin', styles.zoom, styles.formLayout)}>
       <Content className="signin">
         <Row gutter={[24, 0]} justify="space-around">
           <Col>
@@ -47,7 +79,7 @@ const SignIn = () => {
             >
               <Form.Item
                 className="username"
-                name="username"
+                name="email"
                 rules={[
                   {
                     required: true,
@@ -68,7 +100,10 @@ const SignIn = () => {
                   },
                 ]}
               >
-                <Input placeholder="Password" />
+                <Input.Password
+                  placeholder="Password"
+                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                />
               </Form.Item>
 
               <Form.Item>

@@ -5,7 +5,7 @@
 }
 body {
   padding: 0 0 30px 0;
-  background-color: rebeccapurple;
+  background-color: #fafafa;
   letter-spacing: -0.3px;
   color: rgba(0, 0, 0, 0.65);
   font-size: 14px;
@@ -100,7 +100,7 @@ body {
         box-shadow: 0 20px 27px rgb(0 0 0 / 5%);
         font-weight: 600;
         .icon {
-          background-color: #bd18ff;
+          background-color: #467dff;
         }
         svg {
           path {
@@ -154,7 +154,7 @@ body {
         box-shadow: 0 20px 27px rgb(0 0 0 / 5%);
         font-weight: 600;
         .icon {
-          background-color: #bd18ff;
+          background-color: #467dff;
         }
         svg {
           path {
@@ -198,7 +198,7 @@ body {
         box-shadow: 0 20px 27px rgb(0 0 0 / 5%);
         font-weight: 600;
         .icon {
-          background-color: #bd18ff;
+          background-color: #467dff;
         }
         svg {
           path {
@@ -224,7 +224,7 @@ body {
         box-shadow: 0 20px 27px rgb(0 0 0 / 5%);
         font-weight: 600;
         .icon {
-          background-color: #bd18ff;
+          background-color: #467dff;
         }
         svg {
           path {
@@ -259,7 +259,7 @@ body {
         justify-content: center;
         align-items: center;
         margin-bottom: 15px;
-        background-color: #bd18ff;
+        background-color: #467dff;
       }
       h6 {
         font-weight: 600;
@@ -287,19 +287,19 @@ body {
     .ant-menu-item.ant-menu-item-selected {
       .active {
         .icon {
-          background-color: #bd18ff;
+          background-color: #467dff;
         }
       }
     }
     .ant-menu-item {
       .active {
         .icon {
-          background-color: #bd18ff;
+          background-color: #467dff;
         }
       }
     }
     .footer-box {
-      background-color: #bd18ff;
+      background-color: #467dff;
       color: #fff;
       box-shadow: none;
       .icon {
@@ -814,7 +814,7 @@ ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.left-nav {
     border: 0px;
     font-weight: 600;
     span.anticon {
-      background: #bd18ff;
+      background: #467dff;
       color: #fff;
     }
     path {
@@ -846,7 +846,7 @@ ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.left-nav {
   box-shadow: 0px 4px 6px #0000001f;
   border-radius: 6px;
   font-size: 19px;
-  background: #bd18ff;
+  background: #467dff;
   color: #fff;
   direction: ltr;
   margin-bottom: 15px;
@@ -897,7 +897,7 @@ ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-light.left-nav {
   h1 {
     font-size: 48px;
     font-weight: 700;
-    color: white;
+    color: #141414;
   }
   h5 {
     font-weight: 400;
@@ -1077,7 +1077,7 @@ button.ant-btn.bell {
   width: 48px;
   height: 48px;
   text-align: center;
-  background: #bd18ff;
+  background: #467dff;
   color: #fff;
   border-radius: 0.5rem;
   margin-left: auto;
@@ -1141,7 +1141,7 @@ button.ant-btn.bell {
       }
       &:last-child {
         span.anticon {
-          color: #bd18ff;
+          color: #467dff;
         }
       }
       color: #8c8c8c;
@@ -1170,10 +1170,10 @@ button.ant-btn.bell {
 }
 span.blue {
   margin-left: 5px;
-  color: #bd18ff;
+  color: #467dff;
   font-weight: 600;
   margin-left: 5px;
-  color: #bd18ff;
+  color: #467dff;
   font-weight: 600;
 }
 .antd-pro-pages-dashboard-analysis-style-salesExtra {
@@ -1192,13 +1192,13 @@ span.blue {
       border-radius: 5px 0px 0px 5px;
     }
     &:hover {
-      color: #bd18ff;
-      border: 1px solid #bd18ff;
+      color: #467dff;
+      border: 1px solid #467dff;
     }
   }
   a.active {
-    color: #bd18ff;
-    border: 1px solid #bd18ff;
+    color: #467dff;
+    border: 1px solid #467dff;
   }
 }
 .ant-list-box {
@@ -1367,10 +1367,10 @@ img {
 }
 .icon-move-right {
   .anticon-right {
-    color: #72059e;
+    color: #40a9ff;
     margin-left: 2px;
   }
-  color: #bd18ff;
+  color: #467dff;
   display: block;
 }
 .mb-4 {
@@ -1916,7 +1916,7 @@ span.ismobile {
         }
         &:hover {
           svg {
-            fill: #bd18ff;
+            fill: #467dff;
           }
         }
       }
@@ -2139,7 +2139,7 @@ span.ismobile {
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 500px;
-  background: black;
+  background: #fff;
   footer.ant-layout-footer {
     svg {
       width: 18px;
@@ -2248,7 +2248,7 @@ section.ant-layout.layout-content {
     width: 64px;
     height: 64px;
     margin: auto;
-    background-color: #bd18ff;
+    background-color: #467dff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgb(0 0 0 / 12%);
     display: flex;

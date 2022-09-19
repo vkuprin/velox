@@ -8,7 +8,7 @@ import TableTitle from '../../components/TableTitle';
 import Modal from '../../components/Modal';
 import RenderLayout, { containerTypes } from '../../layouts/RenderLayout';
 
-import styles from '../../pages/ProfilePage/components/index.module.scss';
+// import styles from '../../pages/ProfilePage/components/index.module.scss';
 
 interface TableContainerProps {
     dataFetch: any[];
@@ -110,23 +110,23 @@ const TableContainer = ({
           {...otherProps}
         />
       </div>
-      <Button
-        onClick={handleAddModal}
-        type="primary"
-        style={{
-          // ToDo change to responsive approach
-          position: 'relative',
-          top: '-48px',
-        }}
-      >
-        Create
-      </Button>
+      {/* <Button */}
+      {/*  onClick={handleAddModal} */}
+      {/*  type="primary" */}
+      {/*  style={{ */}
+      {/*    // ToDo change to responsive approach */}
+      {/*    position: 'relative', */}
+      {/*    top: '-48px', */}
+      {/*  }} */}
+      {/* > */}
+      {/*  Create */}
+      {/* </Button> */}
       {isModalVisible && (
         <Modal
           visible={isModalVisible}
           onVisible={() => null}
           onCancel={closeModal}
-          className={cs('modal filter-modal', styles.editModal)}
+          className={cs('modal filter-modal')}
           footer={[
             <Button
               key="btn-filter-apply"
