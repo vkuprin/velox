@@ -110,17 +110,17 @@ const TableContainer = ({
           {...otherProps}
         />
       </div>
-      {/* <Button */}
-      {/*  onClick={handleAddModal} */}
-      {/*  type="primary" */}
-      {/*  style={{ */}
-      {/*    // ToDo change to responsive approach */}
-      {/*    position: 'relative', */}
-      {/*    top: '-48px', */}
-      {/*  }} */}
-      {/* > */}
-      {/*  Create */}
-      {/* </Button> */}
+      <Button
+        onClick={handleAddModal}
+        type="primary"
+        style={{
+          // ToDo change to responsive approach
+          position: 'relative',
+          top: '-48px',
+        }}
+      >
+        Create
+      </Button>
       {isModalVisible && (
         <Modal
           visible={isModalVisible}

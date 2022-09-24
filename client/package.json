@@ -14,7 +14,6 @@
     "typescript": "tsc-files -p ./tsconfig.json --pretty --noEmit"
   },
   "engines": {
-    "node": "16.13.0",
     "yarn": "3.2.0"
   },
   "lint-staged": {
