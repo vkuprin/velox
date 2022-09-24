@@ -134,6 +134,7 @@ const ProfilePage = () => {
                   if (title === 'Created') {
                     return (
                       <Descriptions.Item key={title} span={3} label={title}>
+                        {/* @ts-ignore */}
                         {moment(descriptions[title]).format('DD/MM/YYYY')}
                       </Descriptions.Item>
                     );
