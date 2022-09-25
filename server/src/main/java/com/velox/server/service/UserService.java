@@ -17,4 +17,6 @@ public interface UserService {
     User findByEmail(String email);
     void verifyEmail(String email);
     void changePassword(String email, String password);
+    void updatePassword(User user, String oldPass, String newPass);
+    User updateUser(User oldUser, User newUser);
 }

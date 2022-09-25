@@ -49,7 +49,9 @@ public class User {
 
 	@Column(columnDefinition = "boolean default false")
 	private boolean emailVerified;
-	
+
+	private Timestamp activedAt;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
 				joinColumns = @JoinColumn(name = "user_id"), 
@@ -159,5 +161,13 @@ public class User {
 
 	public void setEmailVerified(boolean emailVerified) {
 		this.emailVerified = emailVerified;
+	}
+
+	public Timestamp getActivedAt() {
+		return activedAt;
+	}
+
+	public void setActivedAt(Timestamp activedAt) {
+		this.activedAt = activedAt;
 	}
 }

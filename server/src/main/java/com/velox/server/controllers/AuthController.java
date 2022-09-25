@@ -102,8 +102,11 @@ public class AuthController {
 
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
+    Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+    roles.add(userRole);
 
-    if (strRoles == null) {
+    /*if (strRoles == null) {
       Role userRole = roleRepository.findByName(ERole.ROLE_USER)
           .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
       roles.add(userRole);
@@ -128,7 +131,7 @@ public class AuthController {
           roles.add(userRole);
         }
       });
-    }
+    }*/
 
     user.setRoles(roles);
     user.setCreatedAt(new Timestamp(new Date().getTime()));

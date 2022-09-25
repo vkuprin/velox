@@ -4,8 +4,11 @@ import com.velox.server.models.User;
 import com.velox.server.repository.UserRepository;
 import com.velox.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 
@@ -14,6 +17,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public List<User> getAllUsers() {
@@ -69,6 +74,34 @@ public class UserServiceImpl implements UserService {
         User user = findByEmail(email);
         user.setPassword(password);
         userRepository.save(user);
+    }
+
+    @Override
+    public void updatePassword(User user, String oldPass, String newPass) {
+        if (!user.getPassword().equals(encoder.encode(oldPass))) {
+            throw new BadCredentialsException("Wrong password");
+        }
+        user.setPassword(encoder.encode(newPass));
+        userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(User oldUser, User newUser) {
+        if (!ObjectUtils.isEmpty(newUser.getFirstName()))
+            oldUser.setFirstName(newUser.getFirstName());
+        if (!ObjectUtils.isEmpty(newUser.getLastName()))
+            oldUser.setLastName(newUser.getLastName());
+        if (!ObjectUtils.isEmpty(newUser.getCountry()))
+            oldUser.setCountry(newUser.getCountry());
+        if (!ObjectUtils.isEmpty(newUser.getDob()))
+            oldUser.setDob(newUser.getDob());
+        if (!ObjectUtils.isEmpty(newUser.getRoles()))
+            oldUser.setRoles(newUser.getRoles());
+        if (!ObjectUtils.isEmpty(newUser.getUsername()))
+            oldUser.setUsername(newUser.getUsername());
+        userRepository.save(oldUser);
+
+        return oldUser;
     }
 
 
