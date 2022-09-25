@@ -1,5 +1,6 @@
 package com.velox.server.service.impl;
 
+import com.velox.server.exception.NoSuchUserException;
 import com.velox.server.models.User;
 import com.velox.server.repository.UserRepository;
 import com.velox.server.service.UserService;
@@ -99,9 +100,24 @@ public class UserServiceImpl implements UserService {
             oldUser.setRoles(newUser.getRoles());
         if (!ObjectUtils.isEmpty(newUser.getUsername()))
             oldUser.setUsername(newUser.getUsername());
+        if (newUser.getEmailVerified())
+            oldUser.setEmailVerified(newUser.getEmailVerified());
+
         userRepository.save(oldUser);
 
         return oldUser;
+    }
+
+    @Override
+    public void suspend(long id, boolean suspend) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setSuspend(suspend);
+            userRepository.save(user);
+        } else {
+            throw new NoSuchUserException(id);
+        }
+
     }
 
 

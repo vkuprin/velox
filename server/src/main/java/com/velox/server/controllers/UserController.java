@@ -3,6 +3,7 @@ package com.velox.server.controllers;
 import com.velox.server.models.ERole;
 import com.velox.server.models.Role;
 import com.velox.server.models.User;
+import com.velox.server.payload.request.Request;
 import com.velox.server.payload.request.SignupRequest;
 import com.velox.server.payload.request.UpdatePassword;
 import com.velox.server.payload.response.MessageResponse;
@@ -121,7 +122,14 @@ public class UserController extends AbstractController{
 
 	@PutMapping("/pass")
 	public ResponseEntity<?> updatePassword(@Valid @RequestBody UpdatePassword updatePassword) {
+		userService.updatePassword(getUser(), updatePassword.getOldPassword(), updatePassword.getOldPassword());
 
+		return ResponseEntity.ok().build();
+	}
+
+	@PutMapping("/suspend/{id}")
+	public ResponseEntity suspend(@RequestBody Request request) {
+		userService.suspend(request.getId(), request.getFlag());
 
 		return ResponseEntity.ok().build();
 	}

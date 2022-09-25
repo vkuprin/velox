@@ -1,5 +1,6 @@
 package com.velox.server.service.impl;
 
+import com.velox.server.exception.UserSuspendedException;
 import com.velox.server.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     User user = userRepository.findByEmail(email)
         .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + email));
+    if (user.getSuspend())
+      throw new UserSuspendedException(email);
     user.setActivedAt(new Timestamp(new Date().getTime()));
     return UserDetailsImpl.build(user);
   }

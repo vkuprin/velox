@@ -50,6 +50,9 @@ public class User {
 	@Column(columnDefinition = "boolean default false")
 	private boolean emailVerified;
 
+	@Column(columnDefinition = "boolean default false")
+	private boolean suspend;
+
 	private Timestamp activedAt;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -169,5 +172,13 @@ public class User {
 
 	public void setActivedAt(Timestamp activedAt) {
 		this.activedAt = activedAt;
+	}
+
+	public boolean getSuspend() {
+		return suspend;
+	}
+
+	public void setSuspend(boolean suspend) {
+		this.suspend = suspend;
 	}
 }
