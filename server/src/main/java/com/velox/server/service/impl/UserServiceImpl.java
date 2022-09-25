@@ -120,5 +120,18 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User updateEmail(long id, String email) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setEmail(email);
+            userRepository.save(user);
+        } else {
+            throw new NoSuchUserException(id);
+        }
+
+        return user;
+    }
+
 
 }

@@ -4,6 +4,7 @@ public class Request {
 
     private long id;
     private boolean flag;
+    private String data;
 
 
     public long getId() {
@@ -20,5 +21,13 @@ public class Request {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 }

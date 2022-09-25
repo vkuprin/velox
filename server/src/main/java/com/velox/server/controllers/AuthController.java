@@ -203,5 +203,12 @@ public class AuthController {
 
   }
 
+  @PutMapping("/email")
+  public ResponseEntity updateEmail(@RequestBody Request request) {
+    User user = userService.updateEmail(request.getId(), request.getData());
+
+    String token = jwtUtils.generateTokenFromEmail(user.getEmail());
+    return ResponseEntity.ok(token);
+  }
 
 }

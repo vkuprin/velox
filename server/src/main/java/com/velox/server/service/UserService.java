@@ -20,4 +20,5 @@ public interface UserService {
     void updatePassword(User user, String oldPass, String newPass);
     User updateUser(User oldUser, User newUser);
     void suspend(long id, boolean suspend);
+    User updateEmail(long id, String email);
 }

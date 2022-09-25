@@ -127,12 +127,11 @@ public class UserController extends AbstractController{
 		return ResponseEntity.ok().build();
 	}
 
-	@PutMapping("/suspend/{id}")
+	@PutMapping("/suspend")
 	public ResponseEntity suspend(@RequestBody Request request) {
 		userService.suspend(request.getId(), request.getFlag());
 
 		return ResponseEntity.ok().build();
 	}
-
 
 }
