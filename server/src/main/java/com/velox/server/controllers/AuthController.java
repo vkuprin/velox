@@ -211,4 +211,10 @@ public class AuthController {
     return ResponseEntity.ok(token);
   }
 
+  //TODO send temp password
+  /*@GetMapping("/email/temp_pass")
+  public ResponseEntity sendTempPass(@RequestParam(name = "email") String email) {
+
+    return ResponseEntity.ok().build();
+  }*/
 }
