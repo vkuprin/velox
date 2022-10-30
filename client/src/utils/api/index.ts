@@ -1,4 +1,4 @@
-const HOST = 'http://ec2-3-239-80-245.compute-1.amazonaws.com:8080/api/';
+const HOST = 'https://ec2-44-195-89-191.compute-1.amazonaws.com/api/';
 
 const getUserAgent = () => `OonTop-${navigator.userAgent}`;
 

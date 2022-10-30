@@ -10,6 +10,7 @@ import './styles/form.scss';
 import HomePage from './pages/HomePage';
 import { UserProvider } from './context/UserProvider';
 import ProfilePage from './pages/ProfilePage';
+import ErrorBoundary from './layouts/ErrorLayout';
 
 interface ProtectedMainLayoutProps {
     children: ReactNode;
@@ -37,12 +38,13 @@ const App = () => {
   };
 
   return (
-    <BrowserRouter>
-      <AuthProvider>
-        <UserProvider>
-          <Routes>
-            <Route path="/" element={<SignInPage />} />
-            {
+    <ErrorBoundary>
+      <BrowserRouter>
+        <AuthProvider>
+          <UserProvider>
+            <Routes>
+              <Route path="/" element={<SignInPage />} />
+              {
             Object.keys(Components).map((route) => (
               <Route
                 path={`/${route}`}
@@ -55,10 +57,11 @@ const App = () => {
               />
             ))
         }
-          </Routes>
-        </UserProvider>
-      </AuthProvider>
-    </BrowserRouter>
+            </Routes>
+          </UserProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 };
 
